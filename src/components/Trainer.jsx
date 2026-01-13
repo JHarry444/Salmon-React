@@ -1,12 +1,16 @@
 // props -> {name, age, specialism}
 
-function Trainer({name, age, specialism="Software"}) {
+function Trainer({ name, age, specialism }) {
+
     return (
         <>
             <p>Name: {name}</p>
             <p>Age: {age}</p>
-            <p>Specialism: {specialism}</p>
-        </>);
+            {(specialism && specialism.length > 1)  && <p>Specialism: {specialism}</p>}
+        </>
+    );
+
+
 }
 
 export default Trainer;
