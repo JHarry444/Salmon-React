@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Trainer from "./Trainer";
 
-function GetTrainers() {
+function GetTrainers({trainers, setTrainers}) {
     const navigate = useNavigate();
 
-    const [trainers, setTrainers] = useState([]);
+   
     const [filter, setFilter] = useState("");
 
     const fetchTrainers = async function () {
@@ -19,9 +19,10 @@ function GetTrainers() {
     }
     //  onLoad (componentDidMount) AND onDelete (componentWillUnmount)
     useEffect(function () {
+        const trainerInterval = setInterval(fetchTrainers, 5_000);
+
         fetchTrainers();
 
-        const trainerInterval = setInterval(fetchTrainers, 5_000);
 
         return () => clearInterval(trainerInterval);
     }, []);
@@ -36,7 +37,7 @@ function GetTrainers() {
 
 
     return (
-        <>
+        <div>
             <h2>External</h2>
             <label htmlFor="filter">Filter</label>
             <input type="text" name="filter" id="filter" value={filter} onChange={e => setFilter(e.target.value)} />
@@ -44,6 +45,7 @@ function GetTrainers() {
                 {
                     trainers
                         .filter(trainer => trainer.name.toLowerCase().startsWith(filter.toLowerCase()))
+                        .reverse()
                         .map(({ id, name, age, specialism }) => (
                             <Trainer
                                 key={id}
@@ -57,7 +59,7 @@ function GetTrainers() {
                 }
             </div>
             <p>{new Date().toISOString()}</p>
-        </>
+        </div>
     );
 }
 
