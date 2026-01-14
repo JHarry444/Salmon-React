@@ -1,7 +1,12 @@
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
+import { ThemeContext } from "../../context/context";
+import { addTrainer } from "./eventHandlers";
 
 function AddTrainer({ setTrainers }) {
+
+    const { theme } = useContext(ThemeContext);
+
     const [data, setData] = useState({
         name: "",
         age: 0,
@@ -10,28 +15,12 @@ function AddTrainer({ setTrainers }) {
 
     const nameRef = useRef(null);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
 
-        try {
-            const res = await axios.post("http://localhost:8080/trainers");
-
-            setData({
-                name: "",
-                age: 0,
-                specialism: ""
-            });
-            nameRef.current.focus();
-            setTrainers(currentTrainers => [...currentTrainers, res.data])
-        } catch (err) {
-            console.error(err);
-        }
-    }
 
     return (
         <div>
             <h2>Add Trainer</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={(e) => addTrainer({ e, setData, nameRef, setTrainers, data })}>
                 <div style={{
                     display: 'grid',
                     gridTemplateColumns: "1fr 3fr",
@@ -50,7 +39,7 @@ function AddTrainer({ setTrainers }) {
                         value={data.specialism} onChange={e => setData({ ...data, specialism: e.target.value })} />
 
                 </div>
-                <button>ADD</button>
+                <button className={theme}>ADD</button>
 
             </form>
         </div>

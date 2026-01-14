@@ -7,7 +7,8 @@ function Effect() {
     return (
         <div style={{
             display: "grid",
-            gridTemplateColumns: "1fr 2fr"
+            gridTemplateColumns: "1fr 2fr",
+            columnGap: "10px"
         }}>
             <AddTrainer setTrainers={setTrainers} />
             <GetTrainers trainers={trainers} setTrainers={setTrainers} />

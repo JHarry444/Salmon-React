@@ -1,6 +1,10 @@
 import { Link } from "react-router";
 import logo from "../assets/react.svg";
+import { useContext } from "react";
+import { ThemeContext } from "../context/context";
 function Navbar() {
+
+    const {theme, toggle} = useContext(ThemeContext);
     return (
         <nav style={{
             "display": "flex",
@@ -14,6 +18,7 @@ function Navbar() {
             <Link to="/events">Events</Link>
             <Link to="/state">State</Link>
             <Link to="/effect">Effect</Link>
+            <button className={theme} onClick={toggle}>TOGGLE THEME</button>
         </nav>
     );
 }
